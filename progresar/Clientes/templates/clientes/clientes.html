@@ -26,7 +26,7 @@ Administración de clientes
             </div>
             <div class="modal-body">
 
-                <form action="clientes/agregarCliente/" method="POST">{% csrf_token %}
+                <form action="agregarCliente/" method="POST">{% csrf_token %}
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Id:</label>
                         <input type="text" name="newId" class="form-control" maxlength="7">
@@ -57,7 +57,7 @@ Administración de clientes
             </div>
             <div class="modal-body">
 
-                <form action="clientes/modificarCliente/" method="POST">{% csrf_token %}
+                <form action="modificarCliente/" method="POST">{% csrf_token %}
                     <div class="form-group">
                         <label>Nombre cliente: </label>
                         <input type="text" name="todoName" id="todoName" value="" class="form-control"
@@ -104,16 +104,13 @@ Administración de clientes
         <td>{{ cliente.nombre }}</td>
         <td>{{ cliente.created }}</td>
         <td>
-            <!--<button class="editarCliente btn btn-primary" data-toggle="modal" data-target="#ModificarCliente"
-                data-id="{{pago.cuenta}}">
-                Agregar Pago
-            </button>-->
-
-            <a id="todolink" href="#editTodoDialog" class="open-EditTodo btn btn-warning" data-toggle="modal"
-                data-todo='{"id":"{{cliente.id}}","todo":"{{cliente.nombre}}"}'>Editar</a>
-
-
-        </td>
+           
+            <button id = "todolink" data-id="{{cliente.id}}" href="#editTodoDialog" 
+            class="open-EditTodo btn btn-warning" data-toggle="modal"
+             data-todo='{ "id": "{{cliente.id}}" , "todo": "{{cliente.nombre}}" }'></button>
+                 Editar
+            </button>
+         </td>
     </tr>
 
     {% endfor %}
@@ -133,9 +130,12 @@ Administración de clientes
 
 
     $(document).on("click", ".open-EditTodo", function () {
-        var todoId = $('#todolink').data('todo').id;
 
-        var todoName = $('#todolink').data('todo').todo;
+        var todoId = $(this).data('todo').id;
+        var todoName = $(this).data('todo').todo;
+
+        //alert(todoId)
+        //alert(todoName)
         $("#todoId").val(todoId);
         $("#todoName").val(todoName);
     });
