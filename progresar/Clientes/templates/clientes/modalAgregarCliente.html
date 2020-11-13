@@ -1,0 +1,28 @@
+<div class="modal fade" id="myEdit" role="dialog">
+    <div class="modal-dialog">
+        {% csrf_token %}
+        <div class=" modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar miembro</h4>
+            </div>
+            <div class="modal-body" style="margin: auto;">
+                <form action="guardaGrupoClientes/" method="POST">{% csrf_token %}
+
+                    <input type="hidden" id="grupo_id" name="grupo-id" value="{{grupoId}}">
+                    <select name="clientes-select" required="" id="id_clientes" multiple=""
+                        style=" width: 400px; height: 400px;">
+
+                        {% for cliente in otrosMiembros %}
+                        <option value="{{cliente.id}}">{{cliente.nombre}}</option>
+
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <input type="submit" value="Guardar" />
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

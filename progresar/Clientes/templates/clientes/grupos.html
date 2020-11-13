@@ -1,0 +1,88 @@
+{% extends "cuentas/padre.html" %}
+
+{% load static %}
+
+{% block title %}
+Administración de grupos
+{% endblock %}
+
+{% block content %}
+<p> </p>
+<p> </p>
+<p> </p>
+
+<table id="customers">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Miembros
+        </th>
+        <th>
+            Acciones
+        </th>
+    </tr>
+    {% for grupo in grupos %}
+    <tr>
+        <td>{{ grupo.id }}</td>
+        <td>{{ grupo.nombre }}</td>
+        <td>
+            {% for mienbro in grupo.clientes.all %}
+            {{mienbro.nombre}}
+            <p></p>
+
+            {% endfor %}
+
+        </td>
+        <td>
+            <!--<button class="crearCliente btn btn-primary" data-toggle="modal" data-target="#nuevoCliente">
+                    Agregar Cliente
+                </button>
+                <button class="crearCliente btn btn-primary" data-toggle="modal" data-target="#nuevoCliente">
+                    Remover Cliente
+                </button>-->
+
+            
+            <button class="open-modal btn btn-primary" data-url="{% url 'agregarCaGrupo' grupo.id %}">
+                Agregar Cliente
+            </button>
+
+
+
+
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<!-- Here we create this empty div for inserting modal -->
+<div id="modal-div"></div>
+
+<p> </p>
+
+<script src="https://code.jquery.com/jquery.min.js"></script>
+<script>
+
+    var modalDiv = $("#modal-div");
+    
+    $(".open-modal").on("click", function () {
+        //window.print("joder");    
+
+        $.ajax({
+            url: $(this).attr("data-url"),
+            success: function (data) {
+                modalDiv.html(data);
+                $("#myEdit").modal();
+            }
+        });
+    });
+
+</script>
+
+{% endblock %}

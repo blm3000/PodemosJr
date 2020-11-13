@@ -1,0 +1,126 @@
+<!--  Sirve como plantilla Padre para aplicar herencia de plantillas -->
+<html>
+
+<head>
+    <!-- Cargamos la carpeta statics usando comandos de django -->
+    <!-- al cargarla podremos utilizar todos los archivos de sus subcarpetas -->
+    {% load static %}
+
+    <!-- Bootstrap -->
+
+    <!-- para hacer referencia a la carpeta static utilizamos sentencias python -->
+    <!-- {% static 'NombreSubcarpetaStaticPoyecto/carpetas Css, javascript o imagenes' %} -->
+    <!-- aplicar a todos los links href que usen contenido de la carpeta static-->
+    <link href="{% static 'progresar/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <!-- estos no porque son contenido online -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+
+
+    <!-- Styles -->
+    <!-- basta con importar una vez el static para poder utilizarlo donde queramos -->
+    <link href="{% static 'progresar/css/gestion.css' %}" rel="stylesheet">
+
+    <title>
+        
+        {% block title %}
+
+        {% endblock %}
+
+    </title>
+    <!-- Indicamos que este contenido sera sobreescrito por la plantilla hija-->
+
+</head>
+
+<body>
+    <h1 class="site-heading text-center text-white d-none d-lg-block">
+        <span class="site-heading-lower">Podemos Practicar</span>
+    </h1>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none"
+                href="{% url 'Home' %}">Podemos
+                Practicar
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav mx-auto">
+                    <!--La etiqueta active en los li es la que ilumina o subraya el label del menú donde estamos-->
+                    <!-- Para verificar cual esta seleccionado y por lo tanto iluminarlo usamos un if -->
+                    <!-- {% if request.path == 'Ruta' %} active {% endif %} -->
+                    <li class="nav-item {% if request.path == '/' %} active {% endif %} px-lg-4">
+                        <a class="nav-link text-uppercase text-expanded" href="{% url 'Home' %}">Inicio</a>
+                    </li>
+
+                    <li class="nav-item {% if request.path == '/cuentas/' %} active {% endif %} px-lg-4">
+                        <a class="nav-link text-uppercase text-expanded" href="{% url 'Cuentas' %}">Cuentas</a>
+                    </li>
+
+                    <li class="nav-item {% if request.path == '/clientes/' %} active {% endif %} px-lg-4">
+                        <a class="nav-link text-uppercase text-expanded" href="{% url 'clientes' %}">Clientes</a>
+                    </li>
+
+                    <li class="nav-item {% if request.path == '/grupos/' %} active {% endif %} px-lg-4">
+                        <a class="nav-link text-uppercase text-expanded" href="{% url 'grupos' %}">Grupos</a>
+                    </li>
+
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- dentro de estas dos etiquetas se colocará el contenido cambiante de cada pagina -->
+    {% block content %}
+
+    {% endblock %}
+
+
+    <!-- Footer -->
+    <footer class="footer text-faded text-center py-5">
+        <div class="container">
+            <p class="m-0">
+                <a href="#" class="link">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+                <a href="#" class="link">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+                <a href="#" class="link">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </p>
+            <p class="m-0 mbt">
+                <a href="sample.html" class="link">Política de privacidad</a> ·
+                <a href="sample.html" class="link">Aviso legal</a> ·
+                <a href="sample.html" class="link">Cookies</a>
+            </p>
+            <p class="m-0 mbt1">&copy; Podemos Practicar 2020</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap -->
+    <script src="{% static 'progresar/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'progresar/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+</body>
+
+</html>

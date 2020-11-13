@@ -1,0 +1,64 @@
+<!-- importamos el template padre para hacer herencia de plantillas -->
+{% extends "cuentas/padre.html" %}
+
+<html>
+
+<head>
+    <title>
+        <!-- cargamos de nuevo la carpeta static para usarla -->
+        {% load static %}
+        
+        <!-- "SobreEscribimos" el titulo de la pagina-->
+        {% block title %}
+        Bienvenido
+        {% endblock %}
+    </title>
+</head>
+
+<body>
+
+    <!-- Acá agregamos el contenido para cada pagina que sería el body -->
+    {% block content %}
+
+    <!-- Heading -->
+    <section class="page-section clearfix">
+        <div class="container">
+            <div class="intro">
+                <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{% static 'progresar/img/principal.jpg' %}"
+                    alt="">
+                <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+                    <h2 class="section-heading mb-4">
+                        <span class="section-heading-lower">Prestamos</span>
+                        <span class="section-heading-upper">El mejor porcentaje en el mercado</span>
+                    </h2>
+                    <p class="mb-3">En prestamo que necesiten en tu grupo a la medida con pagos flexibles, tu decides a que período 
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Message -->
+    <section class="page-section cta">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <div class="cta-inner text-center rounded">
+                        <h2 class="section-heading mb-4">
+                            <span class="section-heading-upper">Compromiso total</span>
+                            <span class="section-heading-lower">Garantizado</span>
+                        </h2>
+                        <p class="mb-0">Con más de 75 años de experiencia a nuestras espaldas, desde Prestamos por grupos
+                            tenemos los conocimientos y herramientas necesarios para llevar cualquier tramite de prestamos
+                            otorgando confianza y profesionalidad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {% endblock %}
+    </body>
+</html>

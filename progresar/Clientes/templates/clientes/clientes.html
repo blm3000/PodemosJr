@@ -1,0 +1,145 @@
+<!-- Heredamos de la plantilla padre-->
+{% extends 'cuentas/padre.html' %}
+
+<!-- cargamos la carpeta "Static" para poder hacer uso de los elementos en ella-->
+{% load static %}
+
+<!-- Modificamos el título de la página -->
+{% block title %}
+
+Administración de clientes
+
+{% endblock %}
+
+<!-- Este es el contenido cambiante en cada plantilla -->
+{% block content %}
+
+<!-- Modal que nos permite crear un nuevo usuario-->
+<div class="modal" tabindex="-1" role="dialog" id="nuevoCliente">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="clientes/agregarCliente/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Id:</label>
+                        <input type="text" name="newId" class="form-control" maxlength="7">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Nombre:</label>
+                        <input type="text" name="newNombre" class="form-control" maxlength="60">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <input type="submit" value="Generar CLiente" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal que nos permite modificar un usuario-->
+<div class="modal fade" tabindex="-1" role="dialog" id="editTodoDialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="clientes/modificarCliente/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <label>Nombre cliente: </label>
+                        <input type="text" name="todoName" id="todoName" value="" class="form-control"
+                            style="width: 230px;">
+                        <input type="hidden" name="todoId" id="todoId" value="">
+                        <p></p>
+                        <input type="submit" value="Guardar CLiente" />
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p> </p>
+
+<button class="crearCliente btn btn-primary" data-toggle="modal" data-target="#nuevoCliente">
+    Agregar Cliente
+</button>
+<p></p>
+
+
+<!-- creamos una tabla para mostrar a los clientes existentes -->
+<table id="customers">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Fecha creación
+        </th>
+    </tr>
+
+    <!-- Iteramos sobre el contexto que mandamos desde la vista para obtener los objetos de clientes -->
+    {% for cliente in clientes %}
+
+    <tr>
+        <!-- obtenemos los atributos de cada objeto y lo mostramos-->
+        <td>{{ cliente.id }}</td>
+        <td>{{ cliente.nombre }}</td>
+        <td>{{ cliente.created }}</td>
+        <td>
+            <!--<button class="editarCliente btn btn-primary" data-toggle="modal" data-target="#ModificarCliente"
+                data-id="{{pago.cuenta}}">
+                Agregar Pago
+            </button>-->
+
+            <a id="todolink" href="#editTodoDialog" class="open-EditTodo btn btn-warning" data-toggle="modal"
+                data-todo='{"id":"{{cliente.id}}","todo":"{{cliente.nombre}}"}'>Editar</a>
+
+
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<p></p>
+
+<script src="https://code.jquery.com/jquery.min.js"></script>
+
+<script>
+    $(document).on("click", ".crearPago", function () {
+        var eventId = $(this).data('id');
+        //$('#idCuenta').html(eventId);
+        $('#idCuenta').val(eventId);
+    });
+
+
+    $(document).on("click", ".open-EditTodo", function () {
+        var todoId = $('#todolink').data('todo').id;
+
+        var todoName = $('#todolink').data('todo').todo;
+        $("#todoId").val(todoId);
+        $("#todoName").val(todoName);
+    });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends 'cuentas/padre.html' %}
+
+{% load static %}
+
+{% block title %}
+
+Administración de cuentas
+
+{% endblock %}
+
+
+{% block content %}
+<div class="modal" tabindex="-1" role="dialog" id="nuevoPago">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action = "/agregarPago/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Num pago:</label>
+                        <input type="number" name="PnPago" class="form-control" id="numero-pago">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Monto:</label>
+                        <input type="number" name="PnMonto" class="form-control" id="monto-pago">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Fecha pago:</label>
+                        <input type="date" name="PnFecha" class="form-control" id="Fecha-pago">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Estatus pago:</label>
+                        <select name="recipient-name" id="recipient-name">
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Pagado">Pagado</option>
+                            <option value="Parcial">Parcial</option>
+                            <option value="Atrasado">Atrasado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Cuenta : </label>
+                        <!--<label name="PnCuenta" id="idCuenta"> </label>-->
+                        <input type="text" name="PnCuenta" name="eventId" id="idCuenta" />
+                        <!--<input type="text" name="PnCuenta" name="eventId" id="idCuenta" />
+                        <span id="idCuenta"></span>-->
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <input type="submit" value="Generar pago"/>
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p></p>
+
+<table id="customers">
+    <tr>
+        <th>
+            Id cuenta
+        </th>
+        <th>
+            Grupo
+        </th>
+        <th>
+            Número de pago
+        </th>
+        <th>
+            Monto de pago
+        </th>
+        <th>
+            Fecha de pago
+        </th>
+        <th>
+            Estatus de pago
+        </th>
+        <th>
+            Estatus de la cuenta
+        </th>
+        <th>
+            Monto de la cuenta
+        </th>
+        <th>
+            Saldo de la cuenta
+        </th>
+        <th>
+            Fecha de de la cuenta
+        </th>
+        <th>
+            Transacciones de la cuenta
+        </th>
+        <th>
+            Modificaciones a la cuenta
+        </th>
+    </tr>
+
+    {% for pago in pagos %}
+    <tr>
+        <td>{{ pago.cuenta }}</td>
+        <td>{{ pago.cuenta.grupo }} </td>
+        <td>{{ pago.num_pago }} </td>
+        <td>{{ pago.monto }} </td>
+        <td>{{ pago.fecha_pago }} </td>
+        <td>{{ pago.estatus }} </td>
+        <td>{{ pago.cuenta.estatus }}</td>
+        <td>{{ pago.cuenta.monto }}</td>
+        <td>{{ pago.cuenta.saldo }}</td>
+        <td>{{ pago.cuenta.created }}</td>
+
+        <td>
+            {% for trans in transacciones %}
+            {% if trans.cuenta == pago.cuenta %}
+
+            {{ trans.monto }}
+            <p></p>
+            {% endif %}
+            {% endfor %}
+        </td>
+
+        {% if pago.cuenta.estatus  != "CERRADA" %}
+
+        <td>
+          
+            <button class="crearPago btn btn-primary" data-toggle="modal" data-target="#nuevoPago"
+                data-id="{{pago.cuenta}}">
+                Agregar Pago
+            </button>
+
+        </td>
+
+        
+        {% else %}
+        <td></td>
+        {% endif %}
+    </tr>
+
+    {% endfor %}
+
+
+
+</table>
+<p></p>
+
+<script src="https://code.jquery.com/jquery.min.js"></script>
+
+<script>
+    $(document).on("click", ".crearPago", function () {
+        var eventId = $(this).data('id');
+        //$('#idCuenta').html(eventId);
+        $('#idCuenta').val(eventId);
+    });
+</script>
+
+{% endblock %}
