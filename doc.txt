@@ -1,0 +1,21 @@
+Estructura del proyecto
+
+1.- Aplicación "Clientes"
+	Aplicación encargada de gestionar las interacciones entre las tablas 'Clientes' y 'Grupos' de la base de datos
+	Por medio de un modelo que implementa ORM.
+	Ademas se encarga de la creación de interfaces graficas de usuario por medio de plantillas
+	Por último, es la aplicación donde se genera una API, que sirve para consultar la información de los clientes registrados
+	
+	para acceder a la API seguir el siguiente enlace 
+	servidor:puerto/api/clientes
+	
+	Ej: localhost:8000/api/clientes/
+
+2.- Aplicación "cuentas"
+	Aplicación encargada de gestionar las interacciones entre las tablas 'Cuentas', 'CalendarioPagos' y 'Transacciones', de 
+	igual forma utiliza un modelo con ORM para la adquisición y creación de la información 
+	Además es la aplicación principal, donde se genera la plantilla padre y los elementos necesarios para dar estilo visual 
+	a las interfaces gráficas de usuario
+	
+3.- Progresar
+	Raíz de proyecto, aquí se administran las urls del sitio, toda la configuración de este y el panel de administración
